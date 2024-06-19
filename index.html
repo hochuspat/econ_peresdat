@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор курса и группы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .lesson-card {
+            background-color: #3498db;
+            color: #fff;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Выберите курс и группу</h1>
+        <select id="course-select">
+            <option value="" selected disabled>Выберите курс</option>
+            <option value="1">Курс 1</option>
+            <option value="2">Курс 2</option>
+            <option value="3">Курс 3</option>
+            <option value="4">Курс 4</option>
+            <option value="5">Курс 5</option>
+        </select>
+        <select id="group-select">
+            <option value="" selected disabled>Выберите группу</option>
+            <!-- The group numbers will be displayed here based on the selected course -->
+        </select>
+        <div id="lesson-cards">
+            <!-- Lesson cards will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        const courseSelect = document.getElementById('course-select');
+        const groupSelect = document.getElementById('group-select');
+        const lessonCards = document.getElementById('lesson-cards');
+
+        const groupsByCourse = {
+            '1': Array.from({length: 16}, (_, i) => `${i + 101}`),
+            '2': Array.from({length: 21}, (_, i) => `${i + 201}`),
+            '3': Array.from({ length: 20 }, (_, i) => `${i + 301}`),
+            '4': Array.from({ length: 21 }, (_, i) => `${i + 401}`),
+            '5': Array.from({ length: 6 }, (_, i) => `${i + 516}`),
+        };
+
+        // Function to update the list of group numbers based on the selected course
+        function updateGroupOptions(course) {
+            groupSelect.innerHTML = ''; // Clear the list of group numbers
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Выберите группу';
+            defaultOption.disabled = true;
+            defaultOption.selected = true;
+            groupSelect.appendChild(defaultOption);
+
+            if (groupsByCourse[course]) {
+                for (const group of groupsByCourse[course]) {
+                    const option = document.createElement('option');
+                    option.value = group;
+                    option.textContent = group;
+                    groupSelect.appendChild(option);
+                }
+            }
+        }
+
+        // Event handler for changing the course selection
+        courseSelect.addEventListener('change', () => {
+            const selectedCourse = courseSelect.value;
+            updateGroupOptions(selectedCourse); // Update the list of group numbers
+        });
+
+        // Event handler for changing the group selection
+        groupSelect.addEventListener('change', async () => {
+            const selectedGroup = groupSelect.value;
+            if (!selectedGroup) {
+                lessonCards.innerHTML = ''; // Clear the lesson cards
+                return;
+            }
+
+            try {
+                // Send a request to the server to get the lessons
+                const response = await fetch(`http://localhost:8000/group-lessons/${selectedGroup}`, {
+                    headers: {
+                        'ngrok-skip-browser-warning': 'true'  // Add a header to skip the ngrok warning
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const lessons = await response.json();
+
+                // Display only those lessons where optional_column is empty
+                lessonCards.innerHTML = '';
+                lessons.forEach(lesson => {
+                    if (!lesson.optional_column || lesson.optional_column === '') {
+                        const card = document.createElement('div');
+                        card.className = 'lesson-card';
+                        // Check the value of the subgroup and replace it with "вся" if the subgroup equals "whole"
+                        const subgroupText = lesson.subgroup === 'whole' ? 'вся' : lesson.subgroup;
+
+                        card.innerHTML = `
+                            <p>Дата: ${lesson.date}</p>
+                            <p>Пара: ${lesson.para}</p>
+                            <p>Дисциплина: ${lesson.subject}</p>
+                            <p>Подгруппа: ${subgroupText}</p>  
+                            <p>Преподаватель: ${lesson.teacherName}</p>
+                        `;
+                        lessonCards.appendChild(card);
+                    }
+                });
+            } catch (error) {
+                console.error('Ошибка при получении уроков:', error);
+                lessonCards.innerHTML = ''; // Clear the lesson cards in case of an error
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #0073e6;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+label {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+#groupSelect {
+    padding: 5px;
+    font-size: 16px;
+}
+
+#lessonCards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.lesson-card {
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    width: calc(33.33% - 20px); /* Размер карточек зависит от количества в строке */
+    box-sizing: border-box;
+}
+
+.lesson-card h2 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.lesson-card p {
+    margin: 5px 0;
+}
+

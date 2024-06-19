@@ -1,0 +1,61 @@
+/* MyCalendar.module.css */
+.myCalendar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #fff; /* Установим белый фон для календаря */
+}
+.scrollContainer {
+  overflow-x: auto; /* Добавляет горизонтальную прокрутку */
+  max-width: 100%; /* Устанавливаем максимальную ширину */
+}
+
+.scheduleGrid {
+  min-width: 2000px; /* Устанавливаем минимальную ширину для таблицы, чтобы активировать прокрутку */
+}
+
+.scheduleGrid {
+  display: grid;
+  grid-gap: 10px;
+  margin-top: 10px;
+}
+.customModal .ant-modal-content {
+  overflow-x: auto; /* Добавляет горизонтальную прокрутку */
+}
+
+.customModal .ant-modal-body {
+  min-width: 2000px; /* Минимальная ширина контента внутри модального окна */
+}
+
+.gridHeader {
+  display: contents; /* Это гарантирует, что заголовок не создаст новую строку сетки */
+}
+.ant-picker-calendar {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+.gridCell {
+  padding: 5px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+
+.timeSlot {
+  font-weight: bold;
+  background-color: #f0f0f0;
+}
+
+.occupied {
+  background-color: #ffdfdf; /* Светло-красный цвет для занятых аудиторий */
+}
+
+.free {
+  background-color: #dfffdf; /* Светло-зеленый цвет для свободных аудиторий */
+}
+.booked {
+  background-color: orange; /* Цвет для забронированных слотов */
+}

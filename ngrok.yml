@@ -1,0 +1,13 @@
+authtoken: 2bz9E93fs6LSLBKDWhmKh6jvRkZ_3Q76ztvm5UyyE78WsS59N
+version: "1"
+tunnels:
+  fastapi:
+    proto: http
+    addr: 8000 # Первый порт на 8002
+  another-service:
+    proto: http
+    addr: 3000
+  third-service:
+    proto: http
+    addr: 8002 # Третий порт на 8000
+
