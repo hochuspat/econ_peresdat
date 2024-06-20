@@ -15,5 +15,10 @@ npm run dev
 python3 -m venv venv
 source venv/bin/activate
 pip install fastapi
-uvicorn server:app --reload
+python3 server.py
+```
+Запуск нгикс:
+```bash
+  docker build -t nginx-econ-peresdat:latest ./nginx
+  docker run -p 453:80 --name nginx-econ-peresdat --add-host host.docker.internal:host-gateway -d nginx-econ-peresdat:latest
 ```

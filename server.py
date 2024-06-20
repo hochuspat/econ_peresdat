@@ -153,7 +153,9 @@ def delete_lesson(id: int):
     conn.close()
     return {"message": "Урок успешно удален"}
 
-
+if __name__ == '__main__':
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 # Step 5: Run the server with Uvicorn
 # Execute: uvicorn server:app --reload
