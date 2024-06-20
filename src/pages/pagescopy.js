@@ -47,7 +47,7 @@ const fetchData = async () => {
     try {
         // Форматируем дату в строку формата YYYY-MM-DD
         const formattedDate = selectedDate.format('YYYY-MM-DD');
-        const response = await fetch(`http://localhost:8000/lessonsp/`, {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/lessonsp/`, {
             headers: {
                 'ngrok-skip-browser-warning': 'true'
             }
@@ -349,7 +349,7 @@ const handleDateChange = (date) => {
 
   const updateLessonInDatabase = async (id, updatedData) => {
     try {
-      const response = await fetch(`http://localhost:8000/update-lesson/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/update-lesson/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -369,7 +369,7 @@ const handleDateChange = (date) => {
   const deleteLessonFromDatabase = async (id) => {
     console.log("Deleting lesson with ID:", id);
     try {
-      const response = await fetch(`http://localhost:8000/delete-lesson/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/delete-lesson/${id}`, {
         method: 'DELETE',
       });
   

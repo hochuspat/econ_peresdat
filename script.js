@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
         lessonCards.innerHTML = "";
 
         // Запрашиваем данные с сервера
-        const response = await fetch(`http://localhost:8000/lessons/${selectedGroup}`);
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/lessons/${selectedGroup}`);
         const lessons = await response.json();
 
         // Создаем карточки для каждого урока и добавляем их на страницу

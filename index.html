@@ -105,7 +105,7 @@
 
             try {
                 // Send a request to the server to get the lessons
-                const response = await fetch(`http://localhost:8000/group-lessons/${selectedGroup}`, {
+                const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/group-lessons/${selectedGroup}`, {
                     headers: {
                         'ngrok-skip-browser-warning': 'true'  // Add a header to skip the ngrok warning
                     }

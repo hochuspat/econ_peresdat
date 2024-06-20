@@ -32,7 +32,7 @@ const isDateWithinRanges = (date, ranges) => {
 
 const getLessons = async (date) => {
   try {
-    const url = `http://localhost:8000/lessons/${date}`;
+    const url = `${process.env.NEXT_PUBLIC_BACKEND_API}/lessons/${date}`;
     const response = await fetch(url, {
       headers: {
         'ngrok-skip-browser-warning': 'true'  // Добавляем заголовок для пропуска предупреждения ngrok
@@ -54,7 +54,7 @@ const getLessons = async (date) => {
 const bookLesson = async (lessonData) => {
   try {
     console.log('Lesson data:', lessonData);
-    const response = await fetch('http://localhost:8000/book-lesson', {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/book-lesson`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -3,20 +3,18 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { Form, Input, Button, notification } from 'antd';
 
-const API_URL = 'http://212.192.134.23/api'; 
+const API_URL = 'http://212.192.134.23/api';
 export default function Login() {
   const router = useRouter();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
 
-  const login = () => {
+  const login = (values) => {
     // Отправка на основной сервер для аутентификации
     fetch(`${API_URL}/user/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ login: username, password }),
+      body: JSON.stringify({ login: values.username, password: values.password }),
     })
     .then(response => {
       if (!response.ok) {
@@ -29,7 +27,7 @@ export default function Login() {
       router.push('/pages');
   
       // Отправка только логина на другой сервер
-      return fetch('http://localhost:8000/record-login', {
+      return fetch(`${process.env.NEXT_PUBLIC_BACKEND_API}/record-login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -56,9 +54,7 @@ export default function Login() {
   
 
   const handleSubmit = (values) => {
-    setUsername(values.username);
-    setPassword(values.password);
-    login();
+    login(values)
   };
 
 
